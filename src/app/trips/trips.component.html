@@ -1,0 +1,38 @@
+<div class="trips-table">
+  <h4>Trips Table</h4>
+  <button class="badge badge-primary" routerLink="/add_trip">Add Trip</button>
+  <div>
+    <table border="1" class="">
+      <tr>
+        <th>ID</th>
+        <th>Reason</th>
+        <th>Description</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Departure</th>
+        <th>Arrival</th>
+        <th>Status</th>
+        <th>Flights</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+      <tr *ngIf="!trips">
+        <td>No Content</td>
+      </tr>
+      <tr *ngFor="let trip of trips" [attr.id]="trip.id">
+        <td>{{ trip.id }}</td>
+        <td>{{ trip.reason }}</td>
+        <td>{{ trip.description }}</td>
+        <td>{{ trip.from }}</td>
+        <td>{{ trip.to }}</td>
+        <td>{{ trip.departureDate }}</td>
+        <td>{{ trip.arrivalDate }}</td>
+        <td>{{ trip.status }}</td>
+        <td *ngIf="trip.flights.length != 0">Flights</td>
+        <td *ngIf="trip.flights.length == 0">No Flights Yet</td>
+        <td><button class="badge badge-warning" routerLink="/trips/{{ trip.id }}">Edit</button></td>
+        <td><button class="badge badge-danger" (click)="removeTrip(trip)">Delete</button></td>
+      </tr>
+    </table>
+  </div>
+</div>

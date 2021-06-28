@@ -1,0 +1,72 @@
+<div>
+  <div class="add-form">
+    <h4>Trip Form</h4>
+    <form>
+      <div class="form-group">
+        <label for="reason">Reason</label>
+        <select name="reason" id="reason" [(ngModel)]="newTrip.reason" class="form-control">
+          <option *ngFor="let reason of reasons" [value]="reason" >{{reason}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input
+        type="text"
+        class="form-control"
+        id="description"
+        [(ngModel)]="newTrip.description"
+        name="description"
+      />
+      </div>
+      <div class="form-group">
+        <label for="from">From Destination</label>
+        <input
+        type="text"
+        class="form-control"
+        id="from"
+        [(ngModel)]="newTrip.from"
+        name="from"
+      />
+      </div>
+      <div class="form-group">
+        <label for="to">To Destination</label>
+        <input
+        type="text"
+        class="form-control"
+        id="to"
+        [(ngModel)]="newTrip.to"
+        name="to"
+      />
+      </div>
+      <div class="form-group">
+        <label for="departureDate">Departure Date</label>
+        <input
+        type="date"
+        class="form-control"
+        id="departureDate"
+        [(ngModel)]="newTrip.departureDate"
+        name="departureDate"
+      />
+      </div>
+      <div class="form-group">
+        <label for="arrivalDate">Arrival Date</label>
+        <input
+      type="date"
+      class="form-control"
+      id="arrivalDate"
+      [(ngModel)]="newTrip.arrivalDate"
+      name="arrivalDate"
+    />
+      </div>
+    </form>
+
+    <button
+    type="submit"
+    class="badge badge-success mb-2"
+    (click)="addTrip()"
+  >
+    Create
+  </button>
+    <p>{{ message }}</p>
+  </div>
+</div>
