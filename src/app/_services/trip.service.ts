@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_URL } from '../shared/constants';
 import { Trip } from '../_models/trip';
+import { Flight } from '../_models/flight';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,11 @@ export class TripService {
     return this.http.delete(`${API_URL}/users/${userId}/trips/${tripId}`, {
       responseType: 'text'
     });
+  }
+  getFlights(userId: number, tripId: number): Observable<Flight[]> {
+    return this.http.get<Flight[]>(
+      `${API_URL}/users/${userId}/trips/${tripId}/flights`
+    );
   }
   requestApproval(userId: number, tripId: number): Observable<any> {
     return this.http.post(

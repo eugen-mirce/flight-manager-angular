@@ -77,22 +77,54 @@
       </div>
 
     </form>
-    <button class="badge badge-danger mr-2" (click)="deleteTrip()">
-      Delete
-    </button>
+    <div class="buttons">
+      <button class="badge badge-danger mr-2" (click)="deleteTrip()">
+        Delete
+      </button>
 
-    <button
-      type="submit"
-      class="badge badge-success mb-2"
-      (click)="updateTrip()"
-    >
-      Update
-    </button>
-    <p>{{ message }}</p>
+      <button
+        type="submit"
+        class="badge badge-success mb-2"
+        (click)="updateTrip()"
+      >
+        Update
+      </button>
+      <p>{{ message }}</p>
+    </div>
+
+    <div *ngIf="currentTrip.flights.length != 0 || currentTrip.status == 'APPROVED'" class="list-flights">
+      <h6>List Of Flights</h6>
+      <table border="1">
+        <tr>
+          <th>ID</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Departure</th>
+          <th>Arrival</th>
+          <th>Edit</th>
+        </tr>
+        <tr *ngFor="let flight of currentTrip.flights">
+          <td>{{flight.id}}</td>
+          <td>{{flight.from}}</td>
+          <td>{{flight.to}}</td>
+          <td>{{flight.departureDate}}</td>
+          <td>{{flight.arrivalDate}}</td>
+          <td *ngIf="isAdmin"><button class="badge badge-warning" routerLink="/flights/{{ flight.id }}">Edit</button>
+          <td *ngIf="!isAdmin">
+            <button class="badge badge-warning" routerLink="/trips/{{currentTrip.id}}//flights/{{ flight.id }}">Edit</button>
+          </td>
+        <tr *ngIf="currentTrip.status == 'APPROVED'">
+          <td colspan="6" class="text-center">
+            <button class="badge badge-success">ADD FLIGHT</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+
   </div>
 
   <div *ngIf="!currentTrip.id">
     <br />
-    <p>Cannot access this Tutorial...</p>
+    <p>Cannot access this trip...</p>
   </div>
 </div>

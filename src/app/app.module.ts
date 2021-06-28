@@ -13,6 +13,9 @@ import { TripComponent } from './trips/trip-details.component';
 
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { AddTripComponent } from './trips/add-trip.component';
+import { FlightsComponent } from './flights/flights.component';
+import { FlightComponent } from './flights/flight-details.component';
+
 @NgModule({
   imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule],
   declarations: [
@@ -22,7 +25,9 @@ import { AddTripComponent } from './trips/add-trip.component';
     ProfileComponent,
     TripsComponent,
     TripComponent,
-    AddTripComponent
+    AddTripComponent,
+    FlightsComponent,
+    FlightComponent
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

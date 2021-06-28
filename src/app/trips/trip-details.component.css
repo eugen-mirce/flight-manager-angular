@@ -1,4 +1,21 @@
 .edit-form {
+  margin-top: 20px;
+}
+.buttons {
+  display: block;
+  float: left;
+}
+
+form {
   max-width: 400px;
+  /* float: left; */
+}
+.list-flights {
+  position: absolute;
+  max-width: 500px;
   margin: auto;
+
+  float: right;
+  top: 100px;
+  right: 50px;
 }

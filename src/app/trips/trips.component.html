@@ -16,8 +16,8 @@
         <th>Edit</th>
         <th>Delete</th>
       </tr>
-      <tr *ngIf="!trips">
-        <td>No Content</td>
+      <tr *ngIf="!trips || trips.length == 0">
+        <td colspan="11" class="text-center">No Content</td>
       </tr>
       <tr *ngFor="let trip of trips" [attr.id]="trip.id">
         <td>{{ trip.id }}</td>

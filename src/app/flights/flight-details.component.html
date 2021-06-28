@@ -1,0 +1,64 @@
+<div>
+  <div *ngIf="currentFlight.id" class="edit-form">
+    <h4>Flight Details</h4>
+    <form>
+      <div class="form-group">
+        <label for="from">From Destination</label>
+        <input
+        type="text"
+        class="form-control"
+        id="from"
+        [(ngModel)]="currentFlight.from"
+        name="from"
+      />
+      </div>
+      <div class="form-group">
+        <label for="to">To Destination</label>
+        <input
+        type="text"
+        class="form-control"
+        id="to"
+        [(ngModel)]="currentFlight.to"
+        name="to"
+      />
+      </div>
+      <div class="form-group">
+        <label for="departureDate">Departure Date</label>
+        <input
+        type="date"
+        class="form-control"
+        id="departureDate"
+        [(ngModel)]="currentFlight.departureDate"
+        name="departureDate"
+      />
+      </div>
+      <div class="form-group">
+        <label for="arrivalDate">Arrival Date</label>
+        <input
+      type="date"
+      class="form-control"
+      id="arrivalDate"
+      [(ngModel)]="currentFlight.arrivalDate"
+      name="arrivalDate"
+    />
+      </div>
+    </form>
+    <button class="badge badge-danger mr-2" (click)="deleteFlight()">
+    Delete
+  </button>
+
+    <button
+    type="submit"
+    class="badge badge-success mb-2"
+    (click)="updateFlight()"
+  >
+    Update
+  </button>
+    <p>{{ message }}</p>
+  </div>
+
+  <div *ngIf="!currentFlight.id">
+    <br />
+    <p>Cannot access this flight...</p>
+  </div>
+</div>

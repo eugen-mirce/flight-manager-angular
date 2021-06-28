@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { API_URL } from '../shared/constants';
 import { Trip } from '../_models/trip';
+import { Flight } from '../_models/flight';
 import { Observable } from 'rxjs';
 
 const httpOptions = {
@@ -26,6 +27,20 @@ export class AdminService {
   }
   deleteTrip(tripId: number): Observable<any> {
     return this.http.delete(`${API_URL}/trips/${tripId}`, {
+      responseType: 'text'
+    });
+  }
+  getAllFlights(): Observable<Flight[]> {
+    return this.http.get<Flight[]>(`${API_URL}/flights`);
+  }
+  getFlight(flightId: number): Observable<Flight> {
+    return this.http.get<Flight>(`${API_URL}/flights/${flightId}`);
+  }
+  updateFlight(flightId: number, data: any): Observable<any> {
+    return this.http.put(`${API_URL}/flights/${flightId}`, data);
+  }
+  deleteFlight(flightId: number): Observable<any> {
+    return this.http.delete(`${API_URL}/flights/${flightId}`, {
       responseType: 'text'
     });
   }

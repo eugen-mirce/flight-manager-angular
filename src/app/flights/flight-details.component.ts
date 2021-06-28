@@ -1,38 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TokenStorageService } from '../_services/token-storage.service';
-import { TripService } from '../_services/trip.service';
 import { AdminService } from '../_services/admin.service';
-import { Trip } from '../_models/trip';
 import { Flight } from '../_models/flight';
-import { REASONS, STATUSES } from '../shared/constants';
+import { FlightService } from '../_services/flight.service';
 
 @Component({
-  selector: 'trip-details',
-  templateUrl: './trip-details.component.html',
-  styleUrls: ['./trip-details.component.css']
+  selector: 'app-flight-details',
+  templateUrl: './flight-details.component.html',
+  styleUrls: ['./flight-details.component.css']
 })
-export class TripComponent implements OnInit {
-  userId: number;
+export class FlightComponent implements OnInit {
+  userId?: number;
+  tripId?: number;
   isAdmin: boolean = false;
-  reasons: string[] = REASONS;
-  statuses: string[] = STATUSES;
 
-  currentTrip: Trip = {
+  currentFlight: Flight = {
     id: null,
-    reason: '',
-    description: '',
     from: '',
     to: '',
     departureDate: '',
-    arrivalDate: '',
-    flights: [],
-    status: ''
+    arrivalDate: ''
   };
+
   message = '';
 
   constructor(
-    private tripService: TripService,
+    private flightService: FlightService,
     private tokenStorageService: TokenStorageService,
     private adminService: AdminService,
     private route: ActivatedRoute,
@@ -43,28 +37,31 @@ export class TripComponent implements OnInit {
     let user = this.tokenStorageService.getUser();
     if (user) {
       if (user.roles.includes('ADMIN')) this.isAdmin = true;
+      else this.tripId = this.route.snapshot.params.id;
+
       this.userId = this.tokenStorageService.getUser().id;
-      let tripId = this.route.snapshot.params.id;
-      this.getTrip(tripId);
+
+      let flightId = this.route.snapshot.params.fid;
+      this.getFlight(flightId);
     } else this.router.navigate(['/login']);
   }
 
-  getTrip(id: number): void {
+  getFlight(id: number): void {
     if (this.isAdmin)
-      this.adminService.getTrip(id).subscribe(
+      this.adminService.getFlight(id).subscribe(
         data => {
           console.log(data);
-          this.currentTrip = data;
+          this.currentFlight = data;
         },
         error => {
           console.log(error);
         }
       );
     else {
-      this.tripService.get(this.userId, id).subscribe(
+      this.flightService.get(this.userId, this.tripId, id).subscribe(
         data => {
           console.log(data);
-          this.currentTrip = data;
+          this.currentFlight = data;
         },
         error => {
           console.log(error);
@@ -73,12 +70,12 @@ export class TripComponent implements OnInit {
     }
   }
 
-  updateTrip(): void {
+  updateFlight(): void {
     this.message = '';
 
     if (this.isAdmin)
       this.adminService
-        .updateTrip(this.currentTrip.id, this.currentTrip)
+        .updateFlight(this.currentFlight.id, this.currentFlight)
         .subscribe(
           response => {
             console.log(response);
@@ -91,8 +88,13 @@ export class TripComponent implements OnInit {
           }
         );
     else
-      this.tripService
-        .update(this.userId, this.currentTrip.id, this.currentTrip)
+      this.flightService
+        .update(
+          this.userId,
+          this.tripId,
+          this.currentFlight.id,
+          this.currentFlight
+        )
         .subscribe(
           response => {
             console.log(response);
@@ -106,38 +108,27 @@ export class TripComponent implements OnInit {
         );
   }
 
-  deleteTrip(): void {
+  deleteFlight(): void {
     if (this.isAdmin)
-      this.adminService.deleteTrip(this.currentTrip.id).subscribe(
+      this.adminService.deleteFlight(this.currentFlight.id).subscribe(
         response => {
-          this.router.navigate(['/trips']);
+          this.router.navigate(['/flights']);
         },
         error => {
           console.log(error);
         }
       );
     else
-      this.tripService.delete(this.userId, this.currentTrip.id).subscribe(
-        response => {
-          console.log(response);
-          this.router.navigate(['/trips']);
-        },
-        error => {
-          console.log(error);
-        }
-      );
-  }
-
-  requestApproval(): void {
-    this.tripService
-      .requestApproval(this.userId, this.currentTrip.id)
-      .subscribe(
-        response => {
-          this.getTrip(this.currentTrip.id);
-        },
-        error => {
-          console.log(error);
-        }
-      );
+      this.flightService
+        .delete(this.userId, this.tripId, this.currentFlight.id)
+        .subscribe(
+          response => {
+            console.log(response);
+            this.router.navigate(['/trips/{{this.tripId}}/flights']);
+          },
+          error => {
+            console.log(error);
+          }
+        );
   }
 }
