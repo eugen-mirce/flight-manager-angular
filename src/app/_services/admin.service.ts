@@ -16,11 +16,30 @@ const httpOptions = {
 export class AdminService {
   constructor(private http: HttpClient) {}
 
-  getAllTrips(): Observable<Trip[]> {
-    return this.http.get<Trip[]>(`${API_URL}/trips`);
+  getUser(id: number): Observable<any> {
+    return this.http.get(`${API_URL}/users/${id}`);
+  }
+  getUsers(): Observable<any> {
+    return this.http.get(`${API_URL}/users`);
+  }
+  createUser(data: any): Observable<any> {
+    return this.http.post(`${API_URL}/users`, data);
+  }
+  updateUser(id: number, data: any): Observable<any> {
+    return this.http.put(`${API_URL}/users/${id}`, data);
+  }
+  deleteUser(id: number): Observable<any> {
+    return this.http.delete(`${API_URL}/users/${id}`, { responseType: 'text' });
+  }
+
+  getAllTrips(selector: string): Observable<Trip[]> {
+    return this.http.get<Trip[]>(`${API_URL}/trips?status=${selector}`);
   }
   getTrip(tripId: number): Observable<Trip> {
     return this.http.get<Trip>(`${API_URL}/trips/${tripId}`);
+  }
+  approveTrip(tripId: number): Observable<any> {
+    return this.http.put(`${API_URL}/trips/${tripId}/status/approved`, {});
   }
   updateTrip(tripId: number, data: any): Observable<any> {
     return this.http.put(`${API_URL}/trips/${tripId}`, data);

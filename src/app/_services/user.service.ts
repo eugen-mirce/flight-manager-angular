@@ -15,6 +15,15 @@ export class UserService {
     });
   }
 
+  update(id: number, data: any): Observable<any> {
+    data.roles = []; //No Need To Send Roles Back
+    return this.http.put(`${API_URL}/users/${id}`, data);
+  }
+
+  delete(id: number): Observable<any> {
+    return this.http.delete(`${API_URL}/users/${id}`, { responseType: 'text' });
+  }
+
   getTrips(): Observable<any> {
     return this.http.get(`${API_URL}/trips`, {
       responseType: 'text'

@@ -115,7 +115,7 @@
           </td>
         <tr *ngIf="currentTrip.status == 'APPROVED'">
           <td colspan="6" class="text-center">
-            <button class="badge badge-success">ADD FLIGHT</button>
+            <button class="badge badge-success" routerLink="/trips/{{currentTrip.id}}/add_flight">ADD FLIGHT</button>
           </td>
         </tr>
       </table>

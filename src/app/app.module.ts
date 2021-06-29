@@ -15,6 +15,10 @@ import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { AddTripComponent } from './trips/add-trip.component';
 import { FlightsComponent } from './flights/flights.component';
 import { FlightComponent } from './flights/flight-details.component';
+import { AdminComponent } from './admin/admin.component';
+import { UsersComponent } from './users/users.component';
+import { AddUserComponent } from './users/add-user.component';
+import { AddFlightComponent } from './flights/add-flight.component';
 
 @NgModule({
   imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule],
@@ -27,7 +31,11 @@ import { FlightComponent } from './flights/flight-details.component';
     TripComponent,
     AddTripComponent,
     FlightsComponent,
-    FlightComponent
+    FlightComponent,
+    AdminComponent,
+    UsersComponent,
+    AddUserComponent,
+    AddFlightComponent
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

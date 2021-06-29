@@ -28,7 +28,7 @@ export class FlightsComponent implements OnInit {
     let user = this.tokenStorageService.getUser();
     if (user) {
       if (user.roles.includes('ADMIN')) this.isAdmin = true;
-      else this.tripId = this.route.snapshot.params.id;
+      this.tripId = this.route.snapshot.params.id;
       this.getFlights();
     } else this.router.navigate(['/login']);
   }

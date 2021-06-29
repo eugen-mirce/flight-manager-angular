@@ -12,6 +12,7 @@ import { AdminService } from '../_services/admin.service';
 })
 export class TripsComponent implements OnInit {
   trips?: Trip[];
+  selector?: string = 'all';
 
   isAdmin: boolean = false;
 
@@ -30,9 +31,14 @@ export class TripsComponent implements OnInit {
     } else this.router.navigate(['/login']);
   }
 
+  changeSelector(newSelector: string): void {
+    this.selector = newSelector;
+    this.getTrips();
+  }
+
   getTrips(): void {
     if (this.isAdmin) {
-      this.adminService.getAllTrips().subscribe(
+      this.adminService.getAllTrips(this.selector).subscribe(
         data => {
           console.log(data);
           this.trips = data;
@@ -76,5 +82,14 @@ export class TripsComponent implements OnInit {
         }
       );
     }
+  }
+
+  approveTrip(trip: any): void {
+    this.adminService.approveTrip(trip.id).subscribe(
+      data => {},
+      error => {
+        console.log(error);
+      }
+    );
   }
 }
